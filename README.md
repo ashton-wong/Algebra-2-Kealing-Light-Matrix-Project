@@ -8,8 +8,8 @@ FROM [codenvy/cpp_gcc](https://hub.docker.com/r/codenvy/cpp_gcc/)
 
 | #       | Description           | Command  |
 | :------------- |:-------------| :-----|
-| 1      | Build | `cd ${current.project.path} && make` |
-| 2      | Run      |   `${current.project.path}/a.out` |
+| 1      | Build and run | `cd ${current.project.path} && make && ./a.out` |
+
 
 # Output
 
