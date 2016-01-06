@@ -2,17 +2,14 @@
 
 # Recipe
 
-FROM codenvy/cpp_gcc
+FROM [codenvy/cpp_gcc](https://hub.docker.com/r/codenvy/cpp_gcc/)
 
 # Commands
 
-Command #1 Build
-
-cd ${current.project.path} && make
-
-Command #2 Run
-
-${current.project.path}/a.out
+| #       | Description           | Command  |
+| :------------- |:-------------| :-----|
+| 1      | Build | `cd ${current.project.path} && make` |
+| 2      | Run      |   `${current.project.path}/a.out` |
 
 # Output
 
