@@ -1,0 +1,58 @@
+{
+  "v": "4.0",
+  "workspace": {
+    "defaultEnv": "cpp",
+    "environments": [
+      {
+        "name": "cpp",
+        "machineConfigs": [
+          {
+            "limits": {
+              "ram": 1000
+            },
+            "name": "ws-machine",
+            "type": "docker",
+            "source": {
+              "location": "http://beta.codenvy.com/api/recipe/reciperdl04ox9jl2ioge7/script",
+              "type": "recipe"
+            },
+            "dev": true
+          }
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "links": [],
+        "name": "console-cpp-simple",
+        "attributes": {},
+        "type": "blank",
+        "source": {
+          "location": "https://github.com/che-samples/console-cpp-simple.git",
+          "type": "git",
+          "parameters": {}
+        },
+        "modules": [],
+        "path": "/console-cpp-simple",
+        "description": "",
+        "problems": [],
+        "mixins": [
+          "git"
+        ]
+      }
+    ],
+    "name": "cpp",
+    "attributes": {},
+    "commands": [
+      {
+        "commandLine": "cd ${current.project.path} && make && ./a.out",
+        "name": "run",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "custom"
+      }
+    ],
+    "links": []
+  }
+}

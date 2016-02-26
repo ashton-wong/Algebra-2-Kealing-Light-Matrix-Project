@@ -1,2 +1,2 @@
 all:
-    g++ hello.cc
+	g++ hello.cc
