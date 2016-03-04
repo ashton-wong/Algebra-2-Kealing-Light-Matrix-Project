@@ -1,5 +1,9 @@
 # console-cpp-simple
 
+# Developer Workspace
+
+[![Contribute](http://beta.codenvy.com/factory/resources/codenvy-contribute.svg)](http://beta.codenvy.com/f?id=21w2nx87yto2xi1z)
+
 # Recipe
 
 FROM [codenvy/cpp_gcc](https://hub.docker.com/r/codenvy/cpp_gcc/)
@@ -14,7 +18,3 @@ FROM [codenvy/cpp_gcc](https://hub.docker.com/r/codenvy/cpp_gcc/)
 # Output
 
 The app will print Hello World to the console
-
-# Factory
-
-[![Contribute](https://codenvy.com/factory/resources/codenvy-contribute.svg)](http://beta.codenvy.com/f?id=21w2nx87yto2xi1z)
