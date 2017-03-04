@@ -10,7 +10,7 @@ before_install:
   - tar xf arduino-1.6.5-linux64.tar.xz
   - sudo mv arduino-1.6.5 /usr/local/share/arduino
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
-  install:
+install:
   - ln -s $PWD /usr/local/share/arduino/libraries/Adafruit_FONA
   - arduino --install-library "Adafruit SleepyDog Library,Adafruit MQTT Library"
 script:
