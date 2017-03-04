@@ -10,8 +10,6 @@ before_install:
   - tar xf arduino-1.6.5-linux64.tar.xz
   - sudo mv arduino-1.6.5 /usr/local/share/arduino
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
-install:
-script:
 notifications:
   slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
-  travis encrypt "kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At" --add notifications.slack
+
