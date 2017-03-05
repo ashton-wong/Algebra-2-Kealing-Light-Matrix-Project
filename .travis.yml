@@ -1,5 +1,15 @@
 #This is a comment, you use the hashtag to start a comment.
 
+#Put the files you want to check in env: I have a sample inside for now.
+
+#Put any dependencies libraries in install. I have a NeoPixel library for the sample right now
+#You can grab libraries from http://platformio.org/lib
+#When you find the right one, look at the URL
+#Find the number in the URL, and put it into platformio lib install ___
+#Look at my example down in install: Adafruit NeoPixel Library is http://platformio.org/lib/show/28/Adafruit%20NeoPixel
+
+#You can have multiple code files and dependencies.
+
 language: python
 python:
     - "2.7"
@@ -10,19 +20,12 @@ cache:
         - "~/.platformio"
 
 env:
-    - #Put the files you want to check here. Use templates underneath, remove the hashtag
-    - #PLATFORMIO_CI_SRC=Example1.ino
-    - #PLATFORMIO_CI_SRC=Example2.ino
     - PLATFORMIO_CI_SRC=test/neotest.ino
 
 install:
     - pip install -U platformio
-
-    - #Put any dependencies libraries in here. Find the right library on PlatformIO, then use template, remove hashtag.
-    - #Example: platformio lib install 1
-    - #Libraries from PlatformIO Library Registry: http://platformio.org/#!/lib/show/1/OneWire
-    - #If you can't find it on PlatformIO, come talk to me (Jeriah). It takes a little more annoyance to get those running.
-    - #You can have multiple libraries
+    
+#If you can't find it on PlatformIO, come talk to me (Jeriah). It takes a little more annoyance to get those running.
     - platformio lib install 28 #Adafruit neopixels
 
 script:
