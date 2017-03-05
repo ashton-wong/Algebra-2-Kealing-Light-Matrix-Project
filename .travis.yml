@@ -12,6 +12,9 @@ python:
 cache:
     directories:
         - "~/.platformio"
+        
+env:
+    - PATH=scripts/
 
 install:
     - pip install -U platformio
@@ -19,6 +22,6 @@ install:
     - unzip arduino/refs/\*.zip -d libs/
 
 script:
-    - for f in arduino/* && do && echo "Building $f" && platformio ci --lib=libs/* --board=uno $f && done
+    - build_arduino.sh
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
