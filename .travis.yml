@@ -24,6 +24,6 @@ install:
     - unzip arduino/refs/\*.zip -d /tmp/
 
 script:
-    - platformio ci --lib=tmp/* --board=uno
+    - platformio ci --lib=tmp/*/ --board=uno
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
