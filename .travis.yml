@@ -2,11 +2,7 @@
 
 #Put the files you want to check in env: I have a sample inside for now.
 
-#Put any dependencies libraries in install. I have a NeoPixel library for the sample right now
-#You can grab libraries from http://platformio.org/lib
-#When you find the right one, look at the URL
-#Find the number in the URL, and put it into platformio lib install ___
-#Look at my example down in install: Adafruit NeoPixel Library is http://platformio.org/lib/show/28/Adafruit%20NeoPixel
+#Put any dependencies libraries in refs.
 
 #You can have multiple code files and dependencies.
 
@@ -20,15 +16,14 @@ cache:
         - "~/.platformio"
 
 env:
-    - PLATFORMIO_CI_SRC=test/neotest.ino
+    - PLATFORMIO_CI_SRC=arduino/*\.ino
 
 install:
     - pip install -U platformio
     
-#If you can't find it on PlatformIO, come talk to me (Jeriah). It takes a little more annoyance to get those running.
-    - platformio lib install 28 #Adafruit neopixels
+    unzip /arduino/refs/*\.zip -d /tmp/
 
 script:
-    - platformio ci --board=uno
+    - platformio ci --lib="/tmp/*" --board=uno
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
