@@ -16,12 +16,12 @@ cache:
         - "~/.platformio"
 
 env:
-    - PLATFORMIO_CI_SRC=arduino/*\.ino
+    - PLATFORMIO_CI_SRC=arduino/\*.ino
 
 install:
     - pip install -U platformio
     
-    unzip /arduino/refs/* -d /tmp/
+    unzip /arduino/refs/\*.zip -d /tmp/
 
 script:
     - platformio ci --lib="/tmp/*" --board=uno
