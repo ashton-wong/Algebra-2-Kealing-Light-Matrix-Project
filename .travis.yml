@@ -16,7 +16,7 @@ env:
 
 install:
     - pip install -U platformio
-	
+
     - #Put any dependencies libraries in here. Find the right library on PlatformIO, then use template, remove hashtag.
     - #Example: platformio lib install 1
     - #Libraries from PlatformIO Library Registry: http://platformio.org/#!/lib/show/1/OneWire
