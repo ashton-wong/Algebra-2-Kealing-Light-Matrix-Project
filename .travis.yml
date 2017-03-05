@@ -14,12 +14,13 @@ cache:
         - "~/.platformio"
 
 env:
-#- for f in /arduino/*
-#- do
-#     - PLATFORMIO_CI_SRC=arduino/$f.ino
-#- done
-    - PLATFORMIO_CI_SRC=arduino/neomatrix.ino
-    - PLATFORMIO_CI_SRC=arduino/Lab_3C.ino
+    - for f in arduino/*
+    - do
+        - echo $f
+        - PLATFORMIO_CI_SRC=$f.ino
+    - done
+    #- PLATFORMIO_CI_SRC=arduino/neomatrix.ino
+    #- PLATFORMIO_CI_SRC=arduino/Lab_3C.ino
 
 install:
     - pip install -U platformio
