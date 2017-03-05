@@ -21,8 +21,8 @@ env:
 install:
     - pip install -U platformio
     
-    wget https://github.com/Wong12/Algebra-2-Kealing-Light-Matrix-Project/blob/master/arduino/refs/Adafruit_NeoPixel-master.zip -O /tmp/Adafruit_NeoPixel-master.zip
-    unzip /tmp/Adafruit_NeoPixel-master.zip -d /tmp/
+    - wget https://github.com/Wong12/Algebra-2-Kealing-Light-Matrix-Project/blob/master/arduino/refs/Adafruit_NeoPixel-master.zip -O /tmp/Adafruit_NeoPixel-master.zip
+    - unzip /tmp/Adafruit_NeoPixel-master.zip -d /tmp/
 
 script:
     - platformio ci --lib="/tmp/Adafruit_NeoPixel-master" --board=uno
