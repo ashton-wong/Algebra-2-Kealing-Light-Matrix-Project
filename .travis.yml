@@ -21,7 +21,7 @@ env:
 install:
     - pip install -U platformio
     
-    - unzip arduino/refs/Adafruit_NeoPixel-master.zip -d /tmp/
+    - unzip arduino/refs/\*.zip -d /tmp/
 
 script:
     - platformio ci --lib="/tmp/Adafruit_NeoPixel-master" --board=uno
