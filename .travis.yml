@@ -19,6 +19,6 @@ install:
     - unzip arduino/refs/\*.zip -d libs/
 
 script:
-    - source /scripts/build_arduino.sh
+    - source scripts/build_arduino.sh
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
