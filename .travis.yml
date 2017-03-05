@@ -14,7 +14,7 @@ cache:
         - "~/.platformio"
 
 env:
-    - PLATFORMIO_CI_SRC="arduino/*"
+    - PLATFORMIO_CI_SRC=arduino/*
 
 install:
     - pip install -U platformio
