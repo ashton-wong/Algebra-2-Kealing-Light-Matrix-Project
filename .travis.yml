@@ -1,6 +1,6 @@
 #This is a comment, you use the hashtag to start a comment.
 
-#Put the files you want to check in arduino folder.
+#Put the files you want to check in arduino/source.
 
 #Put any dependencies libraries in arduino/refs.
 
