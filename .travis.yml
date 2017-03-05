@@ -14,7 +14,8 @@ cache:
         - "~/.platformio"
 
 env:
-    - PLATFORMIO_CI_SRC=arduino/*
+    - PLATFORMIO_CI_SRC=arduino/neomatrix.ino
+    - PLATFORMIO_CI_SRC=arduino/Lab_3C.ino
 
 install:
     - pip install -U platformio
