@@ -16,12 +16,12 @@ cache:
         - "~/.platformio"
 
 env:
-    - PLATFORMIO_CI_SRC=/arduino/neomatrix.ino
+    - PLATFORMIO_CI_SRC=arduino/neomatrix.ino
 
 install:
     - pip install -U platformio
     
-    - unzip /arduino/refs/Adafruit_NeoPixel-master.zip -d /tmp/
+    - unzip arduino/refs/Adafruit_NeoPixel-master.zip -d /tmp/
 
 script:
     - platformio ci --lib="/tmp/Adafruit_NeoPixel-master" --board=uno
