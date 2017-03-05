@@ -1,0 +1,29 @@
+#This is a comment, you use the hashtag to start a comment.
+
+language: python
+python:
+    - "2.7"
+
+# Cache PlatformIO packages using Travis CI container-based infrastructure
+cache:
+    directories:
+        - "~/.platformio"
+
+env:
+    - #Put the files you want to check here. Use templates underneath, remove the hashtag
+    - #PLATFORMIO_CI_SRC=Example1.ino
+    - #PLATFORMIO_CI_SRC=Example2.ino
+
+install:
+    - pip install -U platformio
+	
+    - #Put any dependencies libraries in here. Find the right library on PlatformIO, then use template, remove hashtag.
+    - #Example: platformio lib install 1
+    - #Libraries from PlatformIO Library Registry: http://platformio.org/#!/lib/show/1/OneWire
+    - #If you can't find it on PlatformIO, come talk to me (Jeriah). It takes a little more annoyance to get those running.
+    - #You can have multiple libraries
+
+script:
+    - platformio ci --board=uno
+notifications:
+    slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
