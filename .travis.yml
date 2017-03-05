@@ -19,6 +19,6 @@ install:
     - unzip arduino/refs/\*.zip -d libs/
 
 script:
-    - scripts/build_arduino.sh
+    - for f in arduino/* && do && echo "Building $f" && platformio ci --lib=libs/* --board=uno $f && done
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
