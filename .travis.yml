@@ -16,7 +16,7 @@ cache:
 
 install:
     - pip install -U platformio
-    - pip install -U python/refs/requirements.txt
+    - pip install -U requirements.txt
 script:
     - source scripts/build_arduino.sh
     - 
