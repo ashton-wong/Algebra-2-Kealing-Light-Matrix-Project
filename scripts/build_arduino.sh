@@ -1,7 +1,7 @@
 #!/bin/bash
 
-for f in arduino/source/*
+for f in arduino/main/*
 do
   echo "Building $f"
-  platformio ci --lib=libs/* --board=uno $f
+  platformio ci --lib=arduino/refs/* --lib=arduino/source/* --board=uno $f
 done

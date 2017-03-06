@@ -5,6 +5,7 @@
 #Put any dependencies libraries in arduino/refs.
 
 language: python
+
 python:
     - "2.7"
 
@@ -15,10 +16,9 @@ cache:
 
 install:
     - pip install -U platformio
-    
-    - unzip arduino/refs/\*.zip -d libs/
 
 script:
     - source scripts/build_arduino.sh
+    
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
