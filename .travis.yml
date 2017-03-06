@@ -27,7 +27,7 @@ script:
     - #./configure && make && make test
     - #ls ./configure
     - #ls ./
-    - pytest python/source/
+    - #pytest python/source/ FIXME
     
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
