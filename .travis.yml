@@ -16,7 +16,8 @@ cache:
 
 install:
     - pip install -U platformio
-    - pip install -U requirements.txt
+    - #pip install -U python/refs/requirements.txt
+    - pip install -U opencv-python
 script:
     - source scripts/build_arduino.sh
     - 
