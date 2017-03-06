@@ -19,8 +19,8 @@ install:
 
 script:
     - source scripts/build_arduino.sh
-    - #./configure && make && make test
-    - ls ./configure
+    - ./configure && make && make test
+    - #ls ./configure
     
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
