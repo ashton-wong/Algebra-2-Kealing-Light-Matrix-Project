@@ -22,3 +22,5 @@ script:
     
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
+
+language: cpp
