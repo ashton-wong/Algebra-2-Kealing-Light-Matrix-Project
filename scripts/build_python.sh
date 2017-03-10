@@ -2,4 +2,5 @@
 
 pip install -U -r python/refs/requirements.txt
 
-#pytest python/source/ FIXME
+mv "python/source/*" "python/source/*_test"
+pytest python/source/
