@@ -4,11 +4,10 @@
 
 #Put any dependencies libraries in arduino/refs.
 
-language: python
-
+language: $compile_lang
 python:
     - "2.7"
-
+env:
 # Cache PlatformIO packages using Travis CI container-based infrastructure
 cache:
     directories:
