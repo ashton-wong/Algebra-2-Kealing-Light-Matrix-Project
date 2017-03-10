@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pip install -U platformio
+
 for f in arduino/main/*
 do
   echo "Building $f"

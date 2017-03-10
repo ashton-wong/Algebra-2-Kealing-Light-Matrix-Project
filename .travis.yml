@@ -4,10 +4,13 @@
 
 #Put any dependencies libraries in arduino/refs.
 
-language: python
-
+sudo: required
+language: $COMPILE_LANG
 python:
     - "2.7"
+env:
+    - COMPILE_LANG=python
+    - COMPILE_LANG=arduino
 
 # Cache PlatformIO packages using Travis CI container-based infrastructure
 cache:
@@ -15,14 +18,10 @@ cache:
         - "~/.platformio"
 
 install:
-    - pip install --upgrade pip
-    - pip install -U platformio
-    - pip install -U -r python/refs/requirements.txt
-    - #pip install -U opencv-python
-script:
-    - source scripts/build_arduino.sh
+    - sudo pip install --upgrade pip
     - 
-    - #pytest python/source/ FIXME
+script:
+    - source "scripts/build_$COMPILE_LANG.sh"
     
 notifications:
     slack: kealingalgebra2:MyCH2sHZL1y591A2OdPEr8At
