@@ -3,5 +3,10 @@
 pip install -U -r python/refs/requirements.txt
 pip install -U pytest
 
-mv python/source/* "python/source/*_test"
-pytest python/source/
+for g in python/source/*
+do
+  echo "Renaming $g"
+  mv $f $f_test
+done
+ls
+#pytest python/source/
