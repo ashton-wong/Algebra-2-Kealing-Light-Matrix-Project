@@ -1,9 +1,5 @@
 #This is a comment, you use the hashtag to start a comment.
 
-#Put the files you want to check in arduino/source.
-
-#Put any dependencies libraries in arduino/refs.
-
 language: $COMPILE_LANG
 python:
     - "2.7"
@@ -18,7 +14,7 @@ cache:
 
 install:
     - pip install --user --upgrade pip
-    - pwd
+
 script:
     - source "scripts/build_$COMPILE_LANG.sh"
     
