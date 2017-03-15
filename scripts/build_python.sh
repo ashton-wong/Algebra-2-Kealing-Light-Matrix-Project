@@ -1,6 +1,5 @@
 #!/bin/bash
 
-ls /usr/local/lib/python2.7/dist-packages/
 #home/local/lib/python2.7/dist-packages/pip install --user -U -r python/refs/requirements.txt
 
 for q in python/source/*
