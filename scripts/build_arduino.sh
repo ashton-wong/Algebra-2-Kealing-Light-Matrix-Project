@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pip install -U platformio
+pip install --user -U platformio
 
 for f in arduino/main/*
 do
