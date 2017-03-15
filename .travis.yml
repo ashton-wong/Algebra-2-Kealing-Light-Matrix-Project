@@ -18,7 +18,7 @@ cache:
 
 install:
     - pip install --user --upgrade pip
-    - 
+    - pwd
 script:
     - source "scripts/build_$COMPILE_LANG.sh"
     
