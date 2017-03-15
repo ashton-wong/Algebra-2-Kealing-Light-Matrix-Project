@@ -4,6 +4,7 @@
 
 #Put any dependencies libraries in arduino/refs.
 
+sudo: required
 language: $COMPILE_LANG
 python:
     - "2.7"
@@ -17,7 +18,7 @@ cache:
         - "~/.platformio"
 
 install:
-    - pip install --user --upgrade pip
+    - sudo pip install --upgrade pip
     - 
 script:
     - source "scripts/build_$COMPILE_LANG.sh"
