@@ -4,7 +4,6 @@
 
 #Put any dependencies libraries in arduino/refs.
 
-sudo: required
 language: $COMPILE_LANG
 python:
     - "2.7"
