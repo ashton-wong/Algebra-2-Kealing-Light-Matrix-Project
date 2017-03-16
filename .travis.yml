@@ -15,11 +15,12 @@ cache:
 install:
 #Install pip locally, allows for upgrade without sudo requirement
     - wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py --user
-    - ls /usr/local/bin
+    - cd /usr/local/bin
     - pip install --user -U pip
     - pip -V
     - pip2 -V
     - pip2.7 -V
+    - ls /usr/local/bin
 
 script:
     - source "scripts/build_$COMPILE_LANG.sh"
