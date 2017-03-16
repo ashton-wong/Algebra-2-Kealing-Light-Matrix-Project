@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./local/lib/python2.7/dist-packages/pip install --user -U platformio
+pip install --user -U platformio
 
 for f in arduino/main/*
 do
