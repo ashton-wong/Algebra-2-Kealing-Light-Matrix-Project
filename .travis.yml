@@ -1,5 +1,6 @@
 #This is a comment, you use the hashtag to start a comment.
 
+sudo: required
 language: $COMPILE_LANG
 python:
     - "2.7"
@@ -11,14 +12,9 @@ env:
 cache:
     directories:
         - "~/.platformio"
-        
-addons:
-    pip:
-        packages:
-        - -U pip
 
 install:
-    - #pip install -U pip
+    - sudo pip install -U pip
 
 script:
     - source "scripts/build_$COMPILE_LANG.sh"
