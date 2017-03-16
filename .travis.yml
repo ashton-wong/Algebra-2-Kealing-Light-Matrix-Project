@@ -16,6 +16,9 @@ install:
 #Install pip locally, allows for upgrade without sudo requirement
     - wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py --user
     - ls /usr/local/bin
+    - pip -V
+    - pip2 -V
+    - pip2.7 -V
 
 script:
     - source "scripts/build_$COMPILE_LANG.sh"
