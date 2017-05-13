@@ -2,13 +2,14 @@ import numpy as np
 import picamera
 import picamera.array
 from PIL import Image
-import os
+import time
 
 with picamera.PiCamera() as camera:
     with picamera.array.PiMotionArray(camera) as stream:
         camera.resolution = (640, 480)
         camera.framerate = 30
         camera.rotation = 180
+        time.sleep(3)
 
         camera.start_recording('/dev/null', format='h264', motion_output=stream)
         camera.wait_recording(10)
