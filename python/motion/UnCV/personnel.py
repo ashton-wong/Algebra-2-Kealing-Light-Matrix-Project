@@ -1,6 +1,7 @@
 import numpy as np
 import picamera
 import picamera.array
+from picamera.array import PiMotionAnalysis
 from PIL import Image
 import os
 import time
@@ -12,6 +13,7 @@ class EntityCapture(PiMotionAnalysis):
 
     def __init__(self, camera):
         super(EntityCapture, self).__init__(camera)
+        self.frame_num = 0
         #self.x_queue = np.zeros(self.QUEUE_SIZE, dtype=np.float)
         #self.y_queue = np.zeros(self.QUEUE_SIZE, dtype=np.float)
 
@@ -21,9 +23,10 @@ class EntityCapture(PiMotionAnalysis):
                 np.square(a['y'].astype(np.float))
                 ).clip(0, 255).astype(np.uint8)
         img = Image.fromarray(data)
-        filename = 'frame%03d.png' % frame
-        print('Writing %s' % filename)
+        filename = 'frame' + str(self.frame_num) + '.png'
+        print('Writing', filename)
         img.save(filename)
+        self.frame_num += 1
     
         # Roll the queues and overwrite the first element with a new
         # mean (equivalent to pop and append, but faster)
