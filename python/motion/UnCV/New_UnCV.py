@@ -2,6 +2,7 @@ import numpy as np
 import picamera
 import picamera.array
 from PIL import Image
+import os
 
 with picamera.PiCamera() as camera:
     with picamera.array.PiMotionArray(camera) as stream:
