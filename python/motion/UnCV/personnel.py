@@ -23,10 +23,15 @@ class EntityCapture(PiMotionAnalysis):
                 np.square(a['y'].astype(np.float))
                 ).clip(0, 255).astype(np.uint8)
         img = Image.fromarray(data)
-        filename = 'frame' + str(self.frame_num) + '.png'
-        print('Writing', filename)
-        img.save(filename)
-        self.frame_num += 1
+
+        #Save frame images
+        #filename = 'frame' + str(self.frame_num) + '.png'
+        #print('Writing', filename)
+        #img.save(filename)
+        #self.frame_num += 1
+
+        #Display to screen (not quite working)
+        img.show()
     
         # Roll the queues and overwrite the first element with a new
         # mean (equivalent to pop and append, but faster)
