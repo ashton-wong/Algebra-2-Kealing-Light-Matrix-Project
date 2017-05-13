@@ -9,7 +9,7 @@ with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
         camera.framerate = 30
         camera.rotation = 180
-        time.sleep(3)
+        time.sleep(2)
 
         camera.start_recording('/dev/null', format='h264', motion_output=stream)
         camera.wait_recording(10)

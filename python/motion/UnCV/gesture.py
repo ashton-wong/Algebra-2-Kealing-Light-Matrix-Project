@@ -2,6 +2,7 @@ import os
 import numpy as np
 import picamera
 from picamera.array import PiMotionAnalysis
+import time
 
 class GestureDetector(PiMotionAnalysis):
     QUEUE_SIZE = 10 # the number of consecutive frames to analyze
@@ -47,10 +48,13 @@ class GestureDetector(PiMotionAnalysis):
                 print("nobody home")
 with picamera.PiCamera(resolution='VGA', framerate=24) as camera:
     with GestureDetector(camera) as detector:
+        camera.rotation = 180
+        
+        time.sleep(2)
+    
         camera.start_recording(
             os.devnull, format='h264', motion_output=detector)
         #camera.start_preview()
-        camera.rotation = 180
         
         try:
             while True:
