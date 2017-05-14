@@ -47,7 +47,7 @@ class EntityCapture(PiMotionAnalysis):
 
 #This part must go at the end.
 #Keeps the program going...until Ctrl-C
-with picamera.PiCamera(resolution='VGA', framerate=24) as camera:
+with picamera.PiCamera(resolution=(30, 50), framerate=24) as camera:
     with EntityCapture(camera) as detector:
         camera.rotation = 180
 
