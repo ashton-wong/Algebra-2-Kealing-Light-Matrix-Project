@@ -23,6 +23,10 @@ class EntityCapture(PiMotionAnalysis):
 
     def analyze(self, a):
         #Distance formula :)
+        #The big part of finishing our goal for this aspect:
+        #Figure out exactly what data is storing
+        #Make a new array or change data so that it shows
+        #what's in front of the camera
         data = np.sqrt(
                 np.square(a['x'].astype(np.float)) +
                 np.square(a['y'].astype(np.float))
