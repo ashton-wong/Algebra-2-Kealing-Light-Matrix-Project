@@ -7,7 +7,7 @@ import os
 import time
 
 #Used for video creation
-import cv2
+#import cv2
 
 #The bulk of the analysis goes here!
 class EntityCapture(PiMotionAnalysis):
@@ -27,16 +27,26 @@ class EntityCapture(PiMotionAnalysis):
         #Figure out exactly what data is storing
         #Make a new array or change data so that it shows
         #what's in front of the camera
+
+        #So this is just magnitude of change (distance) turned into a
+        #picture! NOT WHAT WE WANT!
         data = np.sqrt(
                 np.square(a['x'].astype(np.float)) +
                 np.square(a['y'].astype(np.float))
                 ).clip(0, 255).astype(np.uint8)
         img = Image.fromarray(data)
 
-        #Save frame images
+        #Frame metadata
         filename = 'frame%03d.png' % self.frame_num
         print(filename)
-        img.save(filename)
+
+        #Debug
+        print(data.shape[0])
+        print(data.shape[1])
+        print(data)
+
+        #Save frames
+        #img.save(filename)
         self.frame_num += 1
 
         #Straight to a video
@@ -47,7 +57,7 @@ class EntityCapture(PiMotionAnalysis):
 
 #This part must go at the end.
 #Keeps the program going...until Ctrl-C
-with picamera.PiCamera(resolution=(30, 50), framerate=24) as camera:
+with picamera.PiCamera(resolution='VGA', framerate=24) as camera:
     with EntityCapture(camera) as detector:
         camera.rotation = 180
 
