@@ -41,19 +41,21 @@ class EntityCapture(PiMotionAnalysis):
         print(filename)
 
         #Debug
-        print(data.shape[0])
-        print(data.shape[1])
-        print(data)
-
+        #print(data.shape[0])
+        #print(data.shape[1]-1)
+        print(a['x'])
+        print(a['y'])
+            
         #Save frames
         #img.save(filename)
         self.frame_num += 1
 
         #Straight to a video
+        # #'s next 3 lines
         #self.video.write(cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR))
 
-    #def finish(self):
-        #self.video.release()
+    def finish(self):
+        self.video.release()
 
 #This part must go at the end.
 #Keeps the program going...until Ctrl-C
@@ -65,14 +67,15 @@ with picamera.PiCamera(resolution='VGA', framerate=24) as camera:
         time.sleep(2)
 
         print("3")
-        time.sleep(1)
+        time.sleep(0.5)
         print("2")
-        time.sleep(1)
+        time.sleep(0.5)
         print("1")
-        time.sleep(1)
+        time.sleep(0.5)
 
         camera.start_recording(
             os.devnull, format='h264', motion_output=detector)
+        #delete the hashtag below later
         #camera.start_preview()
         
         try:
