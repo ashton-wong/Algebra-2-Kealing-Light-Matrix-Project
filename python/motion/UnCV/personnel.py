@@ -30,11 +30,12 @@ class EntityCapture(PiMotionAnalysis):
 
         #So this is just magnitude of change (distance) turned into a
         #picture! NOT WHAT WE WANT!
-        data = np.sqrt(
-                np.square(a['x'].astype(np.float)) +
-                np.square(a['y'].astype(np.float))
-                ).clip(0, 255).astype(np.uint8)
-        img = Image.fromarray(data)
+        #data = np.sqrt(
+                #np.square(a['x'].astype(np.float)) +
+                #np.square(a['y'].astype(np.float))
+                #).clip(0, 255).astype(np.uint8)
+        #img = Image.fromarray(data)
+        
 
         #Frame metadata
         filename = 'frame%03d.png' % self.frame_num
@@ -43,8 +44,14 @@ class EntityCapture(PiMotionAnalysis):
         #Debug
         #print(data.shape[0])
         #print(data.shape[1]-1)
-        print(a['x'])
-        print(a['y'])
+        #print(a['x'])
+        #print(a['y'])
+        
+        x = np.where(a['x'] != 0)
+        print(x)
+        
+        y = np.where(a['y'] != 0)
+        print(y)                
             
         #Save frames
         #img.save(filename)
