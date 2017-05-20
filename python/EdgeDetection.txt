@@ -1,0 +1,114 @@
+﻿import imgproc
+from imgproc import *
+
+
+# also import the maths module for the square root function
+import math
+
+
+
+
+# open a webcam to take pictures
+camera = Camera(640, 480)
+
+
+# Open a viewer window to display images
+viewer = Viewer(640, 480, "The first step")
+
+
+# grab a couple of frames, just to flush the camera
+camera.grabImage()
+camera.grabImage()
+
+
+# take a picture from the camera
+img = camera.grabImage()
+
+
+# create an empty image to show the edges
+img_edge = Image(640, 480)
+
+
+
+
+# display the image in the viewer
+viewer.displayImage(img)
+
+
+
+
+# iterate over each pixel in the image
+for x in range(1, img.width - 1):
+        for y in range(1, img.height - 1):
+                # initialize Gy to 0 for every pixel
+                Gy = 0
+
+
+
+
+                # top left pixel
+                r, g, b = img[x - 1, y - 1]
+                # intensity ranges from 0 to 765 (255 * 3)
+                intensity = (r + g + b)
+                # accumulate the value into Gy
+                Gy += -intensity
+
+
+
+
+                # now we do the same for the remaining pixels, left to right, top to bottom
+
+
+
+
+                # remaining left column
+
+
+                r, g, b = img[x - 1, y + 1]
+                Gy += (r + g + b)
+
+
+
+
+                # middle pixels
+                r, g, b = img[x, y - 1]
+                Gy += -2 * (r + g + b)
+
+
+                r, g, b = img[x, y + 1]
+                Gy += 2 * (r + g + b)
+
+
+
+
+                # right column
+                r, g, b = img[x + 1, y - 1]
+                Gy += -(r + g + b)
+
+
+                r, g, b= img[x + 1, y + 1]
+                Gy += (r + g + b)
+
+
+                # normalize Gy to the range 0 to 255
+                # 3060 because it's a range from 0-255, and there are three of them (for R,G,B)
+                # and also because the sobel kernel's maximum possible value is 4*255, so 12*255
+                # Absolute value because the range is -3060 - 3060, therefore you need a positive value
+                Gy = abs (Gy) / 3060 * 255
+
+
+                # convert Gy to an integer
+                Gy = int(Gy)
+
+
+                # draw Gy in the edge image
+                img_edge[x, y] = Gy, Gy, Gy
+
+
+
+
+# display the edge image
+viewer.displayImage(img_edge)
+
+
+#end
