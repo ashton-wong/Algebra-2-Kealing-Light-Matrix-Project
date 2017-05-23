@@ -1,7 +1,7 @@
 #define PIN 6
+#include <Adafruit_NeoPixel.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoMatrix.h>
-#include <Adafruit_NeoPixel.h>
 
 bool waitforYvalue = false;
 
@@ -155,6 +155,8 @@ while (Serial.available()) {
       
       pixels.show();
       pixels.drawPixel(inX, inY, rgb[0]);
+      //I Changed the line below
+      void fillScreen(0);
       iStart=-1; //Only for testing
       if (i==-3) {
             rand1prev = rand1;
