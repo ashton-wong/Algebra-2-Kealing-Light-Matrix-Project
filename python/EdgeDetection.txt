@@ -1,22 +1,22 @@
-import imgproc
-from imgproc import *
+import picamera
 
 # also import the maths module for the square root function
 import math
 
 
-# open a webcam to take pictures
-camera = Camera(640, 480)
+# open the picamera to take pictures
+camera = picamera.PiCamera()
+camera.resolution = (640, 480)
 
 # Open a viewer window to display images
 viewer = Viewer(640, 480, "The first step")
 
-# grab a couple of frames, just to flush the camera
-camera.grabImage()
-camera.grabImage()
+# capture a couple of frames, just to flush the camera
+camera.capture()
+camera.capture()
 
 # take a picture from the camera
-img = camera.grabImage()
+img = camera.capture()
 
 # create an empty image to show the edges
 img_edge = Image(640, 480)
@@ -29,7 +29,7 @@ viewer.displayImage(img)
 # iterate over each pixel in the image
 for x in range(1, img.width - 1):
 	for y in range(1, img.height - 1):
-		# initialise Gx to 0 and Gy to 0 for every pixel
+		# initialize Gx to 0 and Gy to 0 for every pixel
 		Gx = 0
 		Gy = 0
 
