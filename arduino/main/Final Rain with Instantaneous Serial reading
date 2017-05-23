@@ -1,5 +1,8 @@
-#include <Adafruit_NeoPixel.h>
 #define PIN 6
+#include <Adafruit_GFX.h>
+#include <Adafruit_NeoMatrix.h>
+#include <Adafruit_NeoPixel.h>
+
 bool waitforYvalue = false;
 
 int inX = -1;
@@ -36,7 +39,7 @@ int clm_num = 10;
 int offst = 0;
 int rand1 = 0;
 int rand2 = 0;
-int delayTime = 5; //the delay time, should be 5-10
+int delayTime = 30; //the delay time, should be 5-10
 int rand1prev = 0;
 int rand2prev = 0;
 
@@ -149,9 +152,9 @@ while (Serial.available()) {
       waitforYvalue = false;
     }
   }
-
       
       pixels.show();
+      pixels.drawPixel(inX, inY, rgb[0]);
       iStart=-1; //Only for testing
       if (i==-3) {
             rand1prev = rand1;
