@@ -1,3 +1,7 @@
+//Reads whatever is inputted onto the serial as coordinates.
+//Then plugs the coordinates into the neopixel matrix and turns them on.
+//IMPORTANT: USES ASCII CHARACTERS INSTEAD OF NUMBERS.
+
 bool waitforYvalue = false;
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoMatrix.h>
