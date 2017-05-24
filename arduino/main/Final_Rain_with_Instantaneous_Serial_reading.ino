@@ -133,7 +133,7 @@ void loop() {
           }
       }
       delay(delayTime); // Delay for a period of time (in milliseconds). Sho
-
+/*
 while (Serial.available()) {
     if (not(waitforYvalue)) {
       inX = Serial.read();
@@ -152,7 +152,8 @@ while (Serial.available()) {
       waitforYvalue = false;
     }
   }
-      
+  */
+  
       pixels.show();
       pixels.drawPixel(inX, inY, rgb[0]);
       //I Changed the line below
