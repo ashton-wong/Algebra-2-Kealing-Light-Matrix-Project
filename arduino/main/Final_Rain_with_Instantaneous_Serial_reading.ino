@@ -86,7 +86,7 @@ void loop() {
                               pixels.setPixelColor((j*length)+pixelPlace-3, pixels.Color(0,0,0));
                               if (pixelPlace <= camera [j] +1) {
                                   pixels.setPixelColor((j*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
-if (pixelPlace <= camera [j]) {
+                                     if (pixelPlace <= camera [j]) {
                                       pixels.setPixelColor((j*length)+pixelPlace-1, pixels.Color(midRed,midGreen,midBlue));
                                   }
                               }
