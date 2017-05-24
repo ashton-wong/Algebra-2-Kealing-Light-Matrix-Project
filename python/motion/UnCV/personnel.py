@@ -51,18 +51,28 @@ class EntityCapture(PiMotionAnalysis):
         #print(a['x'])
         #print(a['y'])
 
-        x_index, y_index = np.where(magnitude != 0
+        x_index, y_index = np.where(magnitude != 0)
 
         filename = 'frame%03d.png' % self.frame_num
         print(filename)
         #print(x_index)
         #print(y_index)
+        
+        max_vals = np.zeros(26)
 
         for index in range(x_index.shape[0]):
-            ser1.write(chr(x_index[index]))
-            ser1.write(chr(y_index[index]))
+            val_x = x_index[index]
+            val_y = y_index[index]
+            if max_vals[val_x] < val_y:
+                max_vals[val_x] = val_y
+            #ser1.write(chr(x_index[index]))
+            #ser1.write(chr(y_index[index]))
             #ser2.write(chr(x_index[index]))
             #ser2.write(chr(y_index[index]))
+            
+        left, mid, right = np.split(max_vals, [10, 16])
+            
+        max_vals
 
         #End of new stuff
         
