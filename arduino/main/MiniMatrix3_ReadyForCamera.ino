@@ -15,7 +15,7 @@ void setup() {
   pixels.setBrightness(50);
 } //void setup()
 int iStart = 0; //Only exists for testing
-int length = 11; //Please only change these void loop variables and the delay, no other code
+int length = 45; //Please only change these void loop variables and the delay, no other code
 int rain_space = 9; //should always be less than length (otherwise this code is inefficient for the purpose)
 int clm_num = 4;
 int offst = 0;
@@ -32,17 +32,17 @@ void loop() {
   int rand = 0;
   int offset [4] = {5,3,0,1};
 
-  int botRed = 0; //71
-  int botGreen = 0; //116
-  int botBlue = 180; //255
+  int botRed = 71; //71
+  int botGreen = 116; //116
+  int botBlue = 255; //255
 
-  int midRed = 0; //51
-  int midGreen = 180; //106
-  int midBlue = 0; //72
+  int midRed = 51; //51
+  int midGreen = 106; //106
+  int midBlue = 72; //72
 
-  int topRed = 180; //71
-  int topGreen = 0; //116
-  int topBlue = 0; //156
+  int topRed = 71; //71
+  int topGreen = 116; //116
+  int topBlue = 156; //156
   for(int i=iStart; i>-2; i++){
     //while (!Serial) {//Wait for connection
     //}
@@ -68,11 +68,11 @@ void loop() {
           }
           int pixelPlace = i-(k*rain_space + rand) + length -offst;
           if (j%2 == 0) {
-            if ((pixelPlace >= camera [j])&&(pixelPlace<=length)) {
+            if ((pixelPlace > camera [j])&&(pixelPlace<=length)) {
               	for(int l=camera [j]; l<length; l++){
                 	pixels.setPixelColor((j*length)+l, pixels.Color(0,0,0));
               	}
-            } else if ((pixelPlace >= camera [j]) && (pixelPlace <= camera [j] + 2)) {//length is an arbitrary location where the rain stops. Cough Cough Hint Hint
+            } if ((pixelPlace >= camera [j]) && (pixelPlace <= camera [j] + 2)) {//length is an arbitrary location where the rain stops. Cough Cough Hint Hint
               pixels.setPixelColor((j*length)+pixelPlace-3, pixels.Color(0,0,0));
               if (pixelPlace <= camera [j] +1) {
                 pixels.setPixelColor((j*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
@@ -96,11 +96,11 @@ void loop() {
             } 
           }
           if (j%2 == 1) {//could be else, kept for readability
-            if ((pixelPlace >= camera [j])&&(pixelPlace<=length)) {
+            if ((pixelPlace > camera [j])&&(pixelPlace<=length)) {
               for(int l=camera [j]; l<length; l++){
                 pixels.setPixelColor(((j+1)*length-1)-l, pixels.Color(0,0,0));
               }
-            }else if (pixelPlace >= camera [j] && pixelPlace <= camera [j] + 2) { //length is an arbitrary location where the rain stops. Cough Cough Hint Hint
+            } if (pixelPlace >= camera [j] && pixelPlace <= camera [j] + 2) { //length is an arbitrary location where the rain stops. Cough Cough Hint Hint
               pixels.setPixelColor(((j+1)*length-1)- pixelPlace +3, pixels.Color(0,0,0));
               if (pixelPlace <= camera [j] +1) {
                 pixels.setPixelColor(((j+1)*length-1)-pixelPlace+2, pixels.Color(topRed,topGreen,topBlue));
@@ -142,4 +142,4 @@ void loop() {
       }
     }	
   } //for(int i=0; i<length; i++)
-}//void loop()
+}//void loop(
