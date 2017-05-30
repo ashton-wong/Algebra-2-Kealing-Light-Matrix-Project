@@ -66,10 +66,11 @@ void loop() {
             k++;
           }
           if ((k>=0)&& (k <= floor(length/rain_space))) {
-            rand = random [ ( ((j%10)+1) * ((k%10)+1)+((rand1prev%10)+1) * ((rand2prev%10)+1) + (j%10) + (k%10) + abs((int)ceil(10*sin(rand1prev%10))) + abs((int)ceil(10*sin(rand2prev%10))) )%10];
+            srand((j%10)+(k%10)+(rand1prev%10)+(rand2prev%10));
           }else{
-            rand = random [ ( ((j%10)+1) * ((k%10)+1)+((rand1%10)+1) * ((rand2%10)+1) + (j%10) + (k%10) + abs((int)ceil(10*sin(rand1%10))) + abs((int)ceil(10*sin(rand2%10))) )%10];//a random value from 'random' array
+            srand((j%10)+(k%10)+(rand1%10)+(rand2%10));
           }
+          ran = random[rand()%10];
           int pixelPlace = i-(k*rain_space + rand) + length -offst;
           if (j%2 == 0) {
             if ((pixelPlace > camera [j])&&(pixelPlace<=length)) {
