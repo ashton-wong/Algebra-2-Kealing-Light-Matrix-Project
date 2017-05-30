@@ -11,7 +11,7 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(270, 3, NEO_GRB + NEO_KHZ800);  //4
 void setup() {
   pixels.begin();
   pixels.show();
-  pixels.setBrightness(10);
+  pixels.setBrightness(50);
   Serial.begin(115200);
   delay(100);
 } //void setup()
@@ -34,7 +34,7 @@ void loop() { //The loop where everything happens
   int ran = 0; //This is the assigned value from random being used at a given time
   int offset [4] = {5,3,0,1}; //Like random, this is an array to make sure line offset is maintained
 
-  int topRed = 71; //71 The next lines of code refer to the color values of pixels. This is the command center for changing color.
+  int topRed = 71; //71 The next lines of code refer to the color values of pixels. This is the command center for changing color. Lightning is changed lower, as its colors are only used once.
   int topGreen = 116; //116
   int topBlue = 255; //255
 
