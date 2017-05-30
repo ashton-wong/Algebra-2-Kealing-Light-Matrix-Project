@@ -31,7 +31,7 @@ void loop() { //The loop where everything happens
   int camera [10] = {45,45,45,45,45,45,45,45,45,45}; // each of these values is the y value of the edge divided to split into 45 parts, x values in (divided by 10), May not be needed and could be defined alongside sereal
 
   int random [10] = {0,3,4,2,0,5,2,5,1,3}; //the random values call to this array after being modded by 10. This makes it so that all random values fall within a given range
-  int rand = 0; //This is the assigned value from random being used at a given time
+  int ran = 0; //This is the assigned value from random being used at a given time
   int offset [4] = {5,3,0,1}; //Like random, this is an array to make sure line offset is maintained
 
   int topRed = 71; //71 The next lines of code refer to the color values of pixels. This is the command center for changing color.
@@ -57,7 +57,7 @@ void loop() { //The loop where everything happens
     int dropStart = floor(tick/rain_space); //I need this to find a value close to what k should be so the arduino does less work (I would like help)
     for (int curClmn=0; curClmn<clm_num; curClmn++){ //
       offst = offset [(3*curClmn)%4]; //Sets offst realitive to the current column being changed
-      for(int dropNumber=kStart; dropNumber>-2; dropNumber++){ //For each tick value and curClmn, drop number checks if a raindrop should be in a place every rainspace tiles when being ofset by the rand value
+      for(int dropNumber=dropStart; dropNumber>-2; dropNumber++){ //For each tick value and curClmn, drop number checks if a raindrop should be in a place every rainspace tiles when being ofset by the rand value
         if (tick == 89) { //The check if the tick should be reset
           tick=-3; //resets tick
           dropNumber=-3; //makes it so no code is run when tick is not the intended value, these two lines end the code
@@ -71,19 +71,19 @@ void loop() { //The loop where everything happens
             srand((curClmn%10)+(dropNumber%10)+(rand1%10)+(rand2%10));
           }
           ran = random[rand()%10];
-          int pixelPlace = tick-(dropNumber*rain_space + rand) + length -offst; //chooses a position from 0 to length-1 in which to place rain
-          if (curClmn==4)&&(dropNumber==4){
-             Serial.print("j k pixelPlace ran (j*length)+pixelPlace")
+          int pixelPlace = tick-(dropNumber*rain_space + ran) + length -offst; //chooses a position from 0 to length-1 in which to place rain
+          /*if (curClmn==4)&&(dropNumber==4){
+             Serial.print("j k pixelPlace ran (j*length)+pixelPlace");
              Serial.print(curClmn);
-             Serial.print(" ")
+             Serial.print(" ");
              Serial.print(dropNumber);
-             Serial.print(" ")
+             Serial.print(" ");
              Serial.print(pixelPlace);
-             Serial.print(" ")
+             Serial.print(" ");
              Serial.print(ran);
-             Serial.print(" ")
+             Serial.print(" ");
              Serial.println((curClmn*length)+pixelPlace);
-          }
+          }*/
           if (curClmn%2 == 0) { //Because this was not turned into a matrix, we must check if an increase in the pixel being called on moves down or up
             if ((pixelPlace > camera [curClmn])&&(pixelPlace<=length)) {
                 for(int l=camera [curClmn]; l<length; l++){ //Turns off rain which is under the camera's input area
@@ -102,7 +102,11 @@ void loop() { //The loop where everything happens
               if ((pixelPlace) >= 1) {
                 pixels.setPixelColor((curClmn*length)+pixelPlace-1, pixels.Color(midRed,midGreen,midBlue));
                 if (pixelPlace >= 2) {
-                  pixels.setPixelColor((curClmn*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
+                  if (ran == 1){
+                    pixels.setPixelColor((curClmn*length)+pixelPlace-2, pixels.Color(255,180,255)); //lightning animation from clouds
+                  } else {
+                    pixels.setPixelColor((curClmn*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
+                  }
                   if (pixelPlace >= 3) {
                     pixels.setPixelColor((curClmn*length)+pixelPlace-3, pixels.Color(0,0,0));
                   }
@@ -125,7 +129,7 @@ void loop() { //The loop where everything happens
                   pixels.setPixelColor(((curClmn+1)*length-1)-pixelPlace+1, pixels.Color(midRed,midGreen,midBlue));
                 }
               }
-            } else if (pixelPlace >= 0 && pixelPlace <= camera [j]-1) {
+            } else if (pixelPlace >= 0 && pixelPlace <= camera [curClmn]-1) {
               pixels.setPixelColor(((curClmn+1)*length-1)- pixelPlace , pixels.Color(botRed,botGreen,botBlue));
               if (pixelPlace >= 1) {
                 pixels.setPixelColor(((curClmn+1)*length-1)- pixelPlace +1, pixels.Color(midRed,midGreen,midBlue));
