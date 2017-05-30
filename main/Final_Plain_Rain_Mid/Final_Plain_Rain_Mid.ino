@@ -149,11 +149,11 @@ void loop() { //The loop where everything happens
     lightning = rand()%50
     if (lightning == 1 && pixelPlace == 0){
       for(int l=0; l<length; l++){
-        pixels.setPixelColor(((lightning%curClmn)*length)+l, pixels.Color(255,0,255));
+        pixels.setPixelColor(((lightning%clm_num)*length)+l, pixels.Color(255,0,255));
         pixels.show
       }
       for(int l=0; l<length; l++){
-        pixels.setPixelColor(((lightning%curClmn)*length)+l, pixels.Color(0,0,0));
+        pixels.setPixelColor(((lightning%clm_num)*length)+l, pixels.Color(0,0,0));
         pixels.show
       }
     }
