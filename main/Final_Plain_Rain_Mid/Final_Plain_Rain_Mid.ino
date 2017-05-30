@@ -46,6 +46,7 @@ void loop() { //The loop where everything happens
   int midGreen = 116; //116
   int midBlue = 156; //156
   for(int tick=tickStart; tick>-2; tick++){
+    lightningClm = rand()%50 //This goes along with a command later on and is placed here for the randomness to differ (Because it is based on time)
     for (int l=0; l<clm_num; l++){//l is a variable that is used to check for a clm_num amount of Serial values
       if (serialon) {
         while (Serial.available() == 0) {//Wait for connection
@@ -66,11 +67,13 @@ void loop() { //The loop where everything happens
             dropNumber++;
           }
           if ((dropNumber>=0)&& (dropNumber <= floor(length/rain_space))) {
-            srand((curClmn%10)+(dropNumber%10)+(rand1prev%10)+(rand2prev%10));
+            //srand((curClmn%10)+(dropNumber%10)+(rand1prev%10)+(rand2prev%10)); The next 3 commented out lines are not working well
+            ran = random[(dropNumber)%10+(dropColumn)%10+(rand1prev)%10+(rand2prev)%10];
           }else{
-            srand((curClmn%10)+(dropNumber%10)+(rand1%10)+(rand2%10));
+            //srand((curClmn%10)+(dropNumber%10)+(rand1%10)+(rand2%10)); //Serial does not reveal its methods
+            ran = random[(dropNumber)%10+(dropColumn)%10+(rand1)%10+(rand2)%10];
           }
-          ran = random[rand()%10];
+          //ran = random[rand()%10];
           int pixelPlace = tick-(dropNumber*rain_space + ran) + length -offst; //chooses a position from 0 to length-1 in which to place rain
           /*if (curClmn==4)&&(dropNumber==4){
              Serial.print("j k pixelPlace ran (j*length)+pixelPlace");
@@ -84,6 +87,7 @@ void loop() { //The loop where everything happens
              Serial.print(" ");
              Serial.println((curClmn*length)+pixelPlace);
           }*/
+          //The if (curClmn%2 == 0) and the if (curClmn%2 == 1) serve the same functions in different sections. All notes for one apply to the other
           if (curClmn%2 == 0) { //Because this was not turned into a matrix, we must check if an increase in the pixel being called on moves down or up
             if ((pixelPlace > camera [curClmn])&&(pixelPlace<=length)) {
                 for(int l=camera [curClmn]; l<length; l++){ //Turns off rain which is under the camera's input area
@@ -91,10 +95,10 @@ void loop() { //The loop where everything happens
                 }
             } if ((pixelPlace >= camera [curClmn]) && (pixelPlace <= camera [curClmn] + 2)) {//length is an arbitrary location where the rain stops. Cough Cough Hint Hint
               pixels.setPixelColor((curClmn*length)+pixelPlace-3, pixels.Color(0,0,0));
-              if (pixelPlace <= camera [curClmn] +1) {
+              if (pixelPlace <= camera [curClmn] +1) { 
                 pixels.setPixelColor((curClmn*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
                 if (pixelPlace <= camera [curClmn]) {
-                  pixels.setPixelColor((curClmn*length)+pixelPlace-1, pixels.Color(midRed,midGreen,midBlue));
+                  pixels.setPixelColor((curClmn*length)+pixelPlace-1, pixels.Color(midRed,midGreen,midBlue)); //End pixel animation
                 }
               }
             } else if (pixelPlace >= 0 && pixelPlace<= camera [curClmn]-1) {
@@ -104,12 +108,12 @@ void loop() { //The loop where everything happens
                 if (pixelPlace >= 2) {
                     pixels.setPixelColor((curClmn*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
                   if (pixelPlace >= 3) {
-                    pixels.setPixelColor((curClmn*length)+pixelPlace-3, pixels.Color(0,0,0));
+                    pixels.setPixelColor((curClmn*length)+pixelPlace-3, pixels.Color(0,0,0)); //Start pixel animation
                   }
                 }
               }
             } else if (pixelPlace < 0){
-              dropNumber=-3;
+              dropNumber=-3; //Move on to next column
             } 
           }
           if (curClmn%2 == 1) {//could be else, kept for readability, used to see if an increase in pixel value moves down or up
@@ -146,30 +150,29 @@ void loop() { //The loop where everything happens
     if (!serialon) {
       delay(6); // Delay for a period of time (in milliseconds).
     }
-    lightning = rand()%50
+    lightning = rand()%50 //randomness that decides if lightning should strike, should be updated so that we understand exactly what rand does
     if (lightning == 1 && pixelPlace == 0){
       for(int l=0; l<length; l++){
-        pixels.setPixelColor(((lightning%clm_num)*length)+l, pixels.Color(255,0,255));
-        pixels.show
+        pixels.setPixelColor((lightningClm*length)+l, pixels.Color(255,255,100)); //Turns on lightning and sets the color
+        pixels.show();
       }
       for(int l=0; l<length; l++){
-        pixels.setPixelColor(((lightning%clm_num)*length)+l, pixels.Color(0,0,0));
-        pixels.show
+        pixels.setPixelColor((lightningClm*length)+l, pixels.Color(0,0,0)); //turns off lightning
       }
     }
-    pixels.show();
+    pixels.show(); //Shows pixels
     tickStart=-1; //Only for testing
     if (tick==-3) {
-      rand1prev = rand1;
+      rand1prev = rand1; //These set new values for rand1 and rand2 as well as save their former forms, which are updated every tick
       rand2prev = rand2;
       rand1++;
       if (rand1==10) {
         rand2++;
         rand1 = 0;
         if (rand2==10) {
-          rand2=0;
+          rand2=0; //This is where randomness should reset, at a time likely unnoticable to humans (1000 drops of rain, 10^3)
         }
       }
     } 
   } 
-}
+}// To be added/ fixed in this code: Rainbows, deletion of blocked rain after movememt stops, randomer lightning, better randomness
