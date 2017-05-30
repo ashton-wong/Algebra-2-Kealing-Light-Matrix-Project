@@ -58,8 +58,8 @@ void loop() {
     for (int j=0; j<clm_num; j++){
       offst = offset [(3*j)%4];
       for(int k=kStart; k>-2; k++){
-        if (i == 89) {
-          i=-2; //resets i
+        if (i == 90) {
+          i=-3; //resets i
           k=-3;
         } else {
           if (k == -1) {
@@ -72,6 +72,18 @@ void loop() {
           }
           ran = random[rand()%10];
           int pixelPlace = i-(k*rain_space + rand) + length -offst;
+          if (j==4)&&(k==4){
+             Serial.print("j k pixelPlace ran (j*length)+pixelPlace")
+             Serial.print(j);
+             Serial.print(" ")
+             Serial.print(k);
+             Serial.print(" ")
+             Serial.print(pixelPlace);
+             Serial.print(" ")
+             Serial.print(ran);
+             Serial.print(" ")
+             Serial.println((j*length)+pixelPlace);
+          }
           if (j%2 == 0) {
             if ((pixelPlace > camera [j])&&(pixelPlace<=length)) {
                 for(int l=camera [j]; l<length; l++){
