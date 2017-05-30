@@ -31,7 +31,7 @@ void loop() {
   int camera [10] = {45,45,45,45,45,45,45,45,45,45}; // each of these values is the y value of the edge divided to split into 45 parts, x values in (divided by 10), May not be needed and could be defined alongside sereal
 
   int random [10] = {0,3,4,2,0,5,2,5,1,3};
-  int rand = 0;
+  int ran = 0;
   int offset [4] = {5,3,0,1};
 
   int topRed = 71; //71
@@ -66,11 +66,12 @@ void loop() {
             k++;
           }
           if ((k>=0)&& (k <= floor(length/rain_space))) {
-            rand = random [ ( ((j%10)+1) * ((k%10)+1)+((rand1prev%10)+1) * ((rand2prev%10)+1) + (j%10) + (k%10) + abs((int)ceil(10*sin(rand1prev%10))) + abs((int)ceil(10*sin(rand2prev%10))) )%10];
+            srand((j%10)+(k%10)+(rand1prev%10)+(rand2prev%10));
           }else{
-            rand = random [ ( ((j%10)+1) * ((k%10)+1)+((rand1%10)+1) * ((rand2%10)+1) + (j%10) + (k%10) + abs((int)ceil(10*sin(rand1%10))) + abs((int)ceil(10*sin(rand2%10))) )%10];//a random value from 'random' array
+            srand((j%10)+(k%10)+(rand1%10)+(rand2%10));
           }
-          int pixelPlace = i-(k*rain_space + rand) + length -offst;
+          ran = random[rand()%10];
+          int pixelPlace = i-(k*rain_space + ran) + length -offst;
           if (j%2 == 0) {
             if ((pixelPlace > camera [j])&&(pixelPlace<=length)) {
                 for(int l=camera [j]; l<length; l++){
