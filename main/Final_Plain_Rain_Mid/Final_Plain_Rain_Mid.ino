@@ -46,7 +46,7 @@ void loop() { //The loop where everything happens
   int midGreen = 116; //116
   int midBlue = 156; //156
   for(int tick=tickStart; tick>-2; tick++){
-    lightningClm = rand()%50 //This goes along with a command later on and is placed here for the randomness to differ (Because it is based on time)
+    int lightningClm = rand()%50; //This goes along with a command later on and is placed here for the randomness to differ (Because it is based on time)
     for (int l=0; l<clm_num; l++){//l is a variable that is used to check for a clm_num amount of Serial values
       if (serialon) {
         while (Serial.available() == 0) {//Wait for connection
@@ -68,10 +68,10 @@ void loop() { //The loop where everything happens
           }
           if ((dropNumber>=0)&& (dropNumber <= floor(length/rain_space))) {
             //srand((curClmn%10)+(dropNumber%10)+(rand1prev%10)+(rand2prev%10)); The next 3 commented out lines are not working well
-            ran = random[(dropNumber)%10+(dropColumn)%10+(rand1prev)%10+(rand2prev)%10];
+            ran = random[(dropNumber)%10+(curClmn)%10+(rand1prev)%10+(rand2prev)%10];
           }else{
             //srand((curClmn%10)+(dropNumber%10)+(rand1%10)+(rand2%10)); //Serial does not reveal its methods
-            ran = random[(dropNumber)%10+(dropColumn)%10+(rand1)%10+(rand2)%10];
+            ran = random[(dropNumber)%10+(curClmn)%10+(rand1)%10+(rand2)%10];
           }
           //ran = random[rand()%10];
           int pixelPlace = tick-(dropNumber*rain_space + ran) + length -offst; //chooses a position from 0 to length-1 in which to place rain
@@ -150,8 +150,8 @@ void loop() { //The loop where everything happens
     if (!serialon) {
       delay(6); // Delay for a period of time (in milliseconds).
     }
-    lightning = rand()%50 //randomness that decides if lightning should strike, should be updated so that we understand exactly what rand does
-    if (lightning == 1 && pixelPlace == 0){
+    int lightning = rand()%50; //randomness that decides if lightning should strike, should be updated so that we understand exactly what rand does
+    if (lightning == 1){
       for(int l=0; l<length; l++){
         pixels.setPixelColor((lightningClm*length)+l, pixels.Color(255,255,100)); //Turns on lightning and sets the color
         pixels.show();
