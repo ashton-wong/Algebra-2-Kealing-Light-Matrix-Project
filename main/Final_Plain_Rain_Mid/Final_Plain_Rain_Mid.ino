@@ -15,26 +15,26 @@ void setup() {
   Serial.begin(115200);
   delay(100);
 } //void setup()
-int iStart = 0; //Only exists for testing
+int tickStart = 0; //Only exists for testing on circuits.io, should mostly be 0
 int length = 45; //Please only change these void loop variables and the delay, no other code
 int rain_space = 9; //should always be less than length (otherwise this code is inefficient for the purpose)
-int clm_num = 10;
-int offst = 0;
-int rand1 = 0;
-int rand2 = 0;
-int rand1prev = 0;
-int rand2prev = 0;
-bool serialon = false;
-void loop() {
+int clm_num = 10; //The number of columns (counted by humans) in the code
+int offst = 0; //This is the number of pixels offset a raindrop will be. This is based off of curClmn later on and is defined here
+int rand1 = 0; //Intended to be the first value that gets changed for randomness, cycles every 10 tick values.
+int rand2 = 0; //Intended to be the second value that gets changed for randomness, cycles every 10 rand1 values.
+int rand1prev = 0; //The previous value of rand1, used to allow seamlessness when tick resets
+int rand2prev = 0; //The previous value of rand2, used to allow seamlessness when tick resets
+bool serialon = false; //This boolean is used for the testing of rain only without the camera. This does not turn off Serial, just the camera input
+void loop() { //The loop where everything happens
 
   //If anyone cares about having a start up animation, ask me and I will add a boolean here
   int camera [10] = {45,45,45,45,45,45,45,45,45,45}; // each of these values is the y value of the edge divided to split into 45 parts, x values in (divided by 10), May not be needed and could be defined alongside sereal
 
-  int random [10] = {0,3,4,2,0,5,2,5,1,3};
-  int rand = 0;
-  int offset [4] = {5,3,0,1};
+  int random [10] = {0,3,4,2,0,5,2,5,1,3}; //the random values call to this array after being modded by 10. This makes it so that all random values fall within a given range
+  int rand = 0; //This is the assigned value from random being used at a given time
+  int offset [4] = {5,3,0,1}; //Like random, this is an array to make sure line offset is maintained
 
-  int topRed = 71; //71
+  int topRed = 71; //71 The next lines of code refer to the color values of pixels. This is the command center for changing color.
   int topGreen = 116; //116
   int topBlue = 255; //255
 
@@ -45,8 +45,8 @@ void loop() {
   int midRed = 71; //71
   int midGreen = 116; //116
   int midBlue = 156; //156
-  for(int i=iStart; i>-2; i++){
-    for (int l=0; l<clm_num; l++){
+  for(int tick=tickStart; tick>-2; tick++){
+    for (int l=0; l<clm_num; l++){//l is a variable that is used to check for a clm_num amount of Serial values
       if (serialon) {
         while (Serial.available() == 0) {//Wait for connection
         }
@@ -54,90 +54,90 @@ void loop() {
         camera [l] = inChar;
       }
     }
-    int kStart = floor(i/rain_space); //I need this to find a value close to what k should be so the arduino does less work (I would like help)
-    for (int j=0; j<clm_num; j++){
-      offst = offset [(3*j)%4];
-      for(int k=kStart; k>-2; k++){
-        if (i == 90) {
-          i=-3; //resets i
-          k=-3;
+    int dropStart = floor(tick/rain_space); //I need this to find a value close to what k should be so the arduino does less work (I would like help)
+    for (int curClmn=0; curClmn<clm_num; curClmn++){ //
+      offst = offset [(3*curClmn)%4]; //Sets offst realitive to the current column being changed
+      for(int dropNumber=kStart; dropNumber>-2; dropNumber++){ //For each tick value and curClmn, drop number checks if a raindrop should be in a place every rainspace tiles when being ofset by the rand value
+        if (tick == 89) { //The check if the tick should be reset
+          tick=-3; //resets tick
+          dropNumber=-3; //makes it so no code is run when tick is not the intended value, these two lines end the code
         } else {
-          if (k == -1) {
-            k++;
+          if (dropNumber == -1) { //Debugging for negative k values
+            dropNumber++;
           }
-          if ((k>=0)&& (k <= floor(length/rain_space))) {
-            srand((j%10)+(k%10)+(rand1prev%10)+(rand2prev%10));
+          if ((dropNumber>=0)&& (dropNumber <= floor(length/rain_space))) {
+            srand((curClmn%10)+(dropNumber%10)+(rand1prev%10)+(rand2prev%10));
           }else{
-            srand((j%10)+(k%10)+(rand1%10)+(rand2%10));
+            srand((curClmn%10)+(dropNumber%10)+(rand1%10)+(rand2%10));
           }
           ran = random[rand()%10];
-          int pixelPlace = i-(k*rain_space + rand) + length -offst;
-          if (j==4)&&(k==4){
+          int pixelPlace = tick-(dropNumber*rain_space + rand) + length -offst; //chooses a position from 0 to length-1 in which to place rain
+          if (curClmn==4)&&(dropNumber==4){
              Serial.print("j k pixelPlace ran (j*length)+pixelPlace")
-             Serial.print(j);
+             Serial.print(curClmn);
              Serial.print(" ")
-             Serial.print(k);
+             Serial.print(dropNumber);
              Serial.print(" ")
              Serial.print(pixelPlace);
              Serial.print(" ")
              Serial.print(ran);
              Serial.print(" ")
-             Serial.println((j*length)+pixelPlace);
+             Serial.println((curClmn*length)+pixelPlace);
           }
-          if (j%2 == 0) {
-            if ((pixelPlace > camera [j])&&(pixelPlace<=length)) {
-                for(int l=camera [j]; l<length; l++){
-                  pixels.setPixelColor((j*length)+l, pixels.Color(0,0,0));
+          if (curClmn%2 == 0) { //Because this was not turned into a matrix, we must check if an increase in the pixel being called on moves down or up
+            if ((pixelPlace > camera [curClmn])&&(pixelPlace<=length)) {
+                for(int l=camera [curClmn]; l<length; l++){ //Turns off rain which is under the camera's input area
+                  pixels.setPixelColor((curClmn*length)+l, pixels.Color(0,0,0));
                 }
-            } if ((pixelPlace >= camera [j]) && (pixelPlace <= camera [j] + 2)) {//length is an arbitrary location where the rain stops. Cough Cough Hint Hint
-              pixels.setPixelColor((j*length)+pixelPlace-3, pixels.Color(0,0,0));
-              if (pixelPlace <= camera [j] +1) {
-                pixels.setPixelColor((j*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
-                if (pixelPlace <= camera [j]) {
-                  pixels.setPixelColor((j*length)+pixelPlace-1, pixels.Color(midRed,midGreen,midBlue));
+            } if ((pixelPlace >= camera [curClmn]) && (pixelPlace <= camera [curClmn] + 2)) {//length is an arbitrary location where the rain stops. Cough Cough Hint Hint
+              pixels.setPixelColor((curClmn*length)+pixelPlace-3, pixels.Color(0,0,0));
+              if (pixelPlace <= camera [curClmn] +1) {
+                pixels.setPixelColor((curClmn*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
+                if (pixelPlace <= camera [curClmn]) {
+                  pixels.setPixelColor((curClmn*length)+pixelPlace-1, pixels.Color(midRed,midGreen,midBlue));
                 }
               }
-            } else if (pixelPlace >= 0 && pixelPlace<= camera [j]-1) {
-              pixels.setPixelColor((j*length)+pixelPlace, pixels.Color(botRed,botGreen,botBlue));
+            } else if (pixelPlace >= 0 && pixelPlace<= camera [curClmn]-1) {
+              pixels.setPixelColor((curClmn*length)+pixelPlace, pixels.Color(botRed,botGreen,botBlue));
               if ((pixelPlace) >= 1) {
-                pixels.setPixelColor((j*length)+pixelPlace-1, pixels.Color(midRed,midGreen,midBlue));
+                pixels.setPixelColor((curClmn*length)+pixelPlace-1, pixels.Color(midRed,midGreen,midBlue));
                 if (pixelPlace >= 2) {
-                  pixels.setPixelColor((j*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
+                  pixels.setPixelColor((curClmn*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
                   if (pixelPlace >= 3) {
-                    pixels.setPixelColor((j*length)+pixelPlace-3, pixels.Color(0,0,0));
+                    pixels.setPixelColor((curClmn*length)+pixelPlace-3, pixels.Color(0,0,0));
                   }
                 }
               }
             } else if (pixelPlace < 0){
-              k=-3;
+              dropNumber=-3;
             } 
           }
-          if (j%2 == 1) {//could be else, kept for readability
-            if ((pixelPlace > camera [j])&&(pixelPlace<=length)) {
-              for(int l=camera [j]; l<length; l++){
-                pixels.setPixelColor(((j+1)*length-1)-l, pixels.Color(0,0,0));
+          if (curClmn%2 == 1) {//could be else, kept for readability, used to see if an increase in pixel value moves down or up
+            if ((pixelPlace > camera [curClmn])&&(pixelPlace<=length)) {
+              for(int l=camera [curClmn]; l<length; l++){//Used to make sure every light below camera is shut off
+                pixels.setPixelColor(((curClmn+1)*length-1)-l, pixels.Color(0,0,0));
               }
-            } if (pixelPlace >= camera [j] && pixelPlace <= camera [j] + 2) { //length is an arbitrary location where the rain stops. Cough Cough Hint Hint
-              pixels.setPixelColor(((j+1)*length-1)- pixelPlace +3, pixels.Color(0,0,0));
-              if (pixelPlace <= camera [j] +1) {
-                pixels.setPixelColor(((j+1)*length-1)-pixelPlace+2, pixels.Color(topRed,topGreen,topBlue));
-                if (pixelPlace <= camera [j]) {
-                  pixels.setPixelColor(((j+1)*length-1)-pixelPlace+1, pixels.Color(midRed,midGreen,midBlue));
+            } if (pixelPlace >= camera [curClmn] && pixelPlace <= camera [curClmn] + 2) { //length is an arbitrary location where the rain stops. Cough Cough Hint Hint
+              pixels.setPixelColor(((curClmn+1)*length-1)- pixelPlace +3, pixels.Color(0,0,0));
+              if (pixelPlace <= camera [curClmn] +1) {
+                pixels.setPixelColor(((curClmn+1)*length-1)-pixelPlace+2, pixels.Color(topRed,topGreen,topBlue));
+                if (pixelPlace <= camera [curClmn]) {
+                  pixels.setPixelColor(((curClmn+1)*length-1)-pixelPlace+1, pixels.Color(midRed,midGreen,midBlue));
                 }
               }
             } else if (pixelPlace >= 0 && pixelPlace <= camera [j]-1) {
-              pixels.setPixelColor(((j+1)*length-1)- pixelPlace , pixels.Color(botRed,botGreen,botBlue));
+              pixels.setPixelColor(((curClmn+1)*length-1)- pixelPlace , pixels.Color(botRed,botGreen,botBlue));
               if (pixelPlace >= 1) {
-                pixels.setPixelColor(((j+1)*length-1)- pixelPlace +1, pixels.Color(midRed,midGreen,midBlue));
+                pixels.setPixelColor(((curClmn+1)*length-1)- pixelPlace +1, pixels.Color(midRed,midGreen,midBlue));
                 if (pixelPlace >= 2) {
-                  pixels.setPixelColor(((j+1)*length-1)- pixelPlace +2, pixels.Color(topRed,topGreen,topBlue));
+                  pixels.setPixelColor(((curClmn+1)*length-1)- pixelPlace +2, pixels.Color(topRed,topGreen,topBlue));
                   if (pixelPlace >= 3){
-                    pixels.setPixelColor(((j+1)*length-1)- pixelPlace +3, pixels.Color(0,0,0));
+                    pixels.setPixelColor(((curClmn+1)*length-1)- pixelPlace +3, pixels.Color(0,0,0));
                   }
                 }
               }
             } else  if (pixelPlace < 0){
-              k=-3;
+              dropNumber=-3;
             } 
           }
         }
@@ -147,8 +147,8 @@ void loop() {
       delay(6); // Delay for a period of time (in milliseconds).
     }
     pixels.show();
-    iStart=-1; //Only for testing
-    if (i==-3) {
+    tickStart=-1; //Only for testing
+    if (tick==-3) {
       rand1prev = rand1;
       rand2prev = rand2;
       rand1++;
@@ -160,5 +160,5 @@ void loop() {
         }
       }
     } 
-  } //for(int i=0; i<length; i++)
-}//void loop(
+  } 
+}
