@@ -102,11 +102,7 @@ void loop() { //The loop where everything happens
               if ((pixelPlace) >= 1) {
                 pixels.setPixelColor((curClmn*length)+pixelPlace-1, pixels.Color(midRed,midGreen,midBlue));
                 if (pixelPlace >= 2) {
-                  if (ran == 1){
-                    pixels.setPixelColor((curClmn*length)+pixelPlace-2, pixels.Color(255,180,255)); //lightning animation from clouds
-                  } else {
                     pixels.setPixelColor((curClmn*length)+pixelPlace-2, pixels.Color(topRed,topGreen,topBlue));
-                  }
                   if (pixelPlace >= 3) {
                     pixels.setPixelColor((curClmn*length)+pixelPlace-3, pixels.Color(0,0,0));
                   }
@@ -149,6 +145,17 @@ void loop() { //The loop where everything happens
     }
     if (!serialon) {
       delay(6); // Delay for a period of time (in milliseconds).
+    }
+    lightning = rand()%50
+    if (lightning == 1 && pixelPlace == 0){
+      for(int l=0; l<length; l++){
+        pixels.setPixelColor(((lightning%curClmn)*length)+l, pixels.Color(255,0,255));
+        pixels.show
+      }
+      for(int l=0; l<length; l++){
+        pixels.setPixelColor(((lightning%curClmn)*length)+l, pixels.Color(0,0,0));
+        pixels.show
+      }
     }
     pixels.show();
     tickStart=-1; //Only for testing
