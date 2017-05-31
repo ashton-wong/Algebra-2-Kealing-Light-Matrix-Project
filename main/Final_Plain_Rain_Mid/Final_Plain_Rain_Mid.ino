@@ -7,7 +7,7 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(270, 3, NEO_GRB + NEO_KHZ800);  //44 Needs to be changed to 330 when running reg. code. Pin (3) matters too
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(450, 3, NEO_GRB + NEO_KHZ800);  //44 Needs to be changed to 330 when running reg. code. Pin (3) matters too
 void setup() {
   pixels.begin();
   pixels.show();
@@ -46,7 +46,16 @@ void loop() { //The loop where everything happens
   int midGreen = 116; //116
   int midBlue = 156; //156
   for(int tick=tickStart; tick>-2; tick++){
-    int lightningClm = rand()%50; //This goes along with a command later on and is placed here for the randomness to differ (Because it is based on time)
+    int lightningClm = rand()%50; //randomness that decides if lightning should strike, should be updated so that we understand exactly what rand does
+    if ((i+rand1+rand2)%32==13){
+      for(int l=0; l<length; l++){
+        pixels.setPixelColor((lightningClm*length)+l, pixels.Color(255,255,100)); //Turns on lightning and sets the color
+        pixels.show();
+      }
+      for(int l=0; l<length; l++){
+        pixels.setPixelColor((lightningClm*length)+l, pixels.Color(0,0,0)); //turns off lightning
+      }
+    }
     for (int l=0; l<clm_num; l++){//l is a variable that is used to check for a clm_num amount of Serial values
       if (serialon) {
         while (Serial.available() == 0) {//Wait for connection
@@ -149,16 +158,6 @@ void loop() { //The loop where everything happens
     }
     if (!serialon) {
       delay(6); // Delay for a period of time (in milliseconds).
-    }
-    int lightning = rand()%50; //randomness that decides if lightning should strike, should be updated so that we understand exactly what rand does
-    if (lightning == 1){
-      for(int l=0; l<length; l++){
-        pixels.setPixelColor((lightningClm*length)+l, pixels.Color(255,255,100)); //Turns on lightning and sets the color
-        pixels.show();
-      }
-      for(int l=0; l<length; l++){
-        pixels.setPixelColor((lightningClm*length)+l, pixels.Color(0,0,0)); //turns off lightning
-      }
     }
     pixels.show(); //Shows pixels
     tickStart=-1; //Only for testing
